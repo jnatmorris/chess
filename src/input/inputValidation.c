@@ -17,8 +17,8 @@ bool inputFromValidator(struct BoardPosition *out, int row, char column,
     return false;
   }
 
-  // not yours
-  if (gameBoard[out->row][out->column].isWhite == playerIsWhite) {
+  // not correct color
+  if (gameBoard[out->row][out->column].isWhite != playerIsWhite) {
     printf("The peice at \033[1m%c%d\033[0m is not yours!\n", column, row);
     return false;
   }
@@ -41,8 +41,29 @@ bool inputToValidator(struct BoardPosition *from, struct BoardPosition *out,
     return false;
   }
 
+  // don't allow to choose same position as from and to
   if (from->row == out->row && from->column == out->column) {
     printf("\033[1mFrom and to\033[0m position may not be the same!\n");
+    return false;
+  }
+
+  switch (gameBoard[from->row][from->column].PeiceType) {
+  case Pawn:
+    // if first row
+
+    return true;
+  case Rook:
+    break;
+  case Knight:
+    break;
+  case Bishop:
+    break;
+  case Queen:
+    break;
+  case King:
+    break;
+  default:
+    printf("Position \033[1m%c%d\033[0m is empty!\n", column, row);
     return false;
   }
 

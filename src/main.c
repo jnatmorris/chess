@@ -1,6 +1,8 @@
+#include "constants.h"
 #include "helpers.h"
 #include "intialize.h"
 #include "movement.h"
+#include <inputValidation.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,30 +32,38 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  bool isMyTurn = color == 'w';
-
   int rowToMoveFrom, rowToMoveTo;
   char columnToMoveFrom, columnToMoveTo;
 
   initializeBoard();
   printBoard();
 
+  struct BoardPosition boardPositionFrom, boardPositionTo;
+
+  // game loop
   while (true) {
 
-    printf("Row and column of peice \033[1mto move\033[0m (eg, c7): ");
-    scanf(" %c%d", &columnToMoveFrom, &rowToMoveFrom);
-
-    printf("Row and column of peice \033[1mto move to\033[0m (eg, c6): ");
-    scanf(" %c%d", &columnToMoveTo, &rowToMoveTo);
-
-    int err = movePeice(rowToMoveFrom, columnToMoveFrom, rowToMoveTo,
-                        columnToMoveTo, color == 'w');
-
-    if (err == -1) {
-      printf("Invalid move!\n");
-    } else {
-      printBoard();
+    bool fromValid = false;
+    // input from loop
+    while (!fromValid) {
+      printf("Row and column of peice \033[1mto move\033[0m (eg, c7): ");
+      scanf(" %c%d", &columnToMoveFrom, &rowToMoveFrom);
+      fromValid = inputFromValidator(&boardPositionFrom, rowToMoveFrom,
+                                     columnToMoveFrom, color == 'w');
     }
+
+    bool toValid = false;
+    // input from loop
+    while (!toValid) {
+      printf("Row and column of peice \033[1mto move to\033[0m (eg, c6): ");
+      scanf(" %c%d", &columnToMoveTo, &rowToMoveTo);
+      toValid = inputToValidator(&boardPositionFrom, &boardPositionTo,
+                                 rowToMoveTo, columnToMoveTo);
+    }
+
+    int err = movePeice(boardPositionFrom, boardPositionTo, color == 'w');
+
+    printBoard();
   }
 
   return EXIT_SUCCESS;
