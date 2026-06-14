@@ -1,5 +1,6 @@
 
 #include "constants.h"
+#include "globals.h"
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -14,6 +15,7 @@ bool isValidPositionForPawn(struct BoardPosition *from,
 
   // check if user wants to move forward in column (not taking)
   if (from->column == to->column) {
+    // if pawn is on starting line allow pawn to move 2 spaces
     if (from->row == startingPosition) {
       return from->row - (1 * operandBasedOnColor) == to->row ||
              from->row - (2 * operandBasedOnColor) == to->row;
@@ -22,21 +24,12 @@ bool isValidPositionForPawn(struct BoardPosition *from,
     }
   }
 
-  // if (playerIsWhite) {
-  //   // &&
-  //   if (from->row == startingPosition) {
-  //     return from->row - 1 == to->row || from->row - 2 == to->row;
-  //   } else {
-  //     return from->row - 1 == to->row;
-  //   }
-
-  // } else {
-  //   if (from->row == 1) {
-  //     return from->row + 1 == to->row || from->row + 2 == to->row;
-  //   } else {
-  //     return from->row + 1 == to->row;
-  //   }
-  // }
-  //
-  return true;
+  // if moving forward and right or left to take. check if space is also filled
+  // with something to take (peice + color)
+  if ((from->column + 1 == to->column || from->column - 1 == to->column) &&
+      gameBoard[to->row][to->column].PeiceType != Empty &&
+      gameBoard[to->row][to->column].isWhite != playerIsWhite) {
+    return true;
+  }
+  return false;
 }

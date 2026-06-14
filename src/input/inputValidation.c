@@ -50,7 +50,6 @@ bool inputToValidator(struct BoardPosition *from, struct BoardPosition *out,
 
   switch (gameBoard[from->row][from->column].PeiceType) {
   case Pawn:
-    // if first row
     return isValidPositionForPawn(from, out, playerIsWhite);
   case Rook:
     break;
@@ -67,5 +66,6 @@ bool inputToValidator(struct BoardPosition *from, struct BoardPosition *out,
     return false;
   }
 
-  return true;
+  printf("ERROR: Unkown peice choosen at \033[1m%c%d\033[0m", column, row);
+  return false;
 }
