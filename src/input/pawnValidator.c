@@ -27,9 +27,15 @@ bool isValidPositionForPawn(struct BoardPosition *from,
   // if moving forward and right or left to take. check if space is also filled
   // with something to take (peice + color)
   if ((from->column + 1 == to->column || from->column - 1 == to->column) &&
-      gameBoard[to->row][to->column].PeiceType != Empty &&
-      gameBoard[to->row][to->column].isWhite != playerIsWhite) {
+      from->column + operandBasedOnColor == to->row &&     // one row over
+      gameBoard[to->row][to->column].PeiceType != Empty && // must be a peice
+      gameBoard[to->row][to->column].isWhite !=
+          playerIsWhite) // not the same color
+  {
     return true;
   }
+
+  // TODO: Implement En Passant
+
   return false;
 }
