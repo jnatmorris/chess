@@ -7,6 +7,6 @@
 bool inputFromValidator(struct BoardPosition *out, int row, char column,
                         bool playerIsWhite);
 bool inputToValidator(struct BoardPosition *from, struct BoardPosition *out,
-                      int row, char column);
+                      int row, char column, bool playerIsWhite);
 
 #endif

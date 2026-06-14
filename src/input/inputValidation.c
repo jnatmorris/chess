@@ -1,5 +1,6 @@
 #include "constants.h"
 #include "globals.h"
+#include "pawnValidator.h"
 #include <converter.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -31,7 +32,7 @@ bool inputFromValidator(struct BoardPosition *out, int row, char column,
 // 		2.1 dependent on the peice type, need to check
 // 3. don't allow to not move
 bool inputToValidator(struct BoardPosition *from, struct BoardPosition *out,
-                      int row, char column) {
+                      int row, char column, bool playerIsWhite) {
   *out = convertToInternalRepresentation(row, column);
 
   // general check if desired location goes off the board
@@ -50,8 +51,7 @@ bool inputToValidator(struct BoardPosition *from, struct BoardPosition *out,
   switch (gameBoard[from->row][from->column].PeiceType) {
   case Pawn:
     // if first row
-
-    return true;
+    return isValidPositionForPawn(from, out, playerIsWhite);
   case Rook:
     break;
   case Knight:

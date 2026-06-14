@@ -39,6 +39,7 @@ int main(int argc, char *argv[]) {
   printBoard();
 
   struct BoardPosition boardPositionFrom, boardPositionTo;
+  bool isWhite = color == 'w';
 
   // game loop
   while (true) {
@@ -49,7 +50,7 @@ int main(int argc, char *argv[]) {
       printf("Row and column of peice \033[1mto move\033[0m (eg, c7): ");
       scanf(" %c%d", &columnToMoveFrom, &rowToMoveFrom);
       fromValid = inputFromValidator(&boardPositionFrom, rowToMoveFrom,
-                                     columnToMoveFrom, color == 'w');
+                                     columnToMoveFrom, isWhite);
     }
 
     bool toValid = false;
@@ -58,10 +59,10 @@ int main(int argc, char *argv[]) {
       printf("Row and column of peice \033[1mto move to\033[0m (eg, c6): ");
       scanf(" %c%d", &columnToMoveTo, &rowToMoveTo);
       toValid = inputToValidator(&boardPositionFrom, &boardPositionTo,
-                                 rowToMoveTo, columnToMoveTo);
+                                 rowToMoveTo, columnToMoveTo,isWhite);
     }
 
-    int err = movePeice(boardPositionFrom, boardPositionTo, color == 'w');
+    int err = movePeice(boardPositionFrom, boardPositionTo, isWhite);
 
     printBoard();
   }
