@@ -1,7 +1,7 @@
 #ifndef INPUTVALIDATION_H
 #define INPUTVALIDATION_H
 
-#include <constants.h>
+#include "constants.h"
 #include <stdbool.h>
 
 bool inputFromValidator(struct BoardPosition *out, int row, char column,

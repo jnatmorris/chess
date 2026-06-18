@@ -34,4 +34,8 @@ extern const char peiceOrder[];
 
 extern const struct GamePeice emptyGamePeice;
 
+#include <sys/socket.h>
+#include <sys/un.h>
+extern const struct sockaddr_un sockAdr;
+
 #endif

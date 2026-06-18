@@ -1,7 +1,7 @@
 #ifndef MOVEMENT_H
 #define MOVEMENT_H
 
-#include <constants.h>
+#include "constants.h"
 #include <stdbool.h>
 
 int movePeice(struct BoardPosition boardPositionFrom,
