@@ -1,9 +1,17 @@
 #include "globals.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-void printBoard() {
+void printBoard(bool isWhite) {
   system("clear");
+
+  if (isWhite) {
+    printf("You are \033[97mwhite\033[0m!\n");
+  } else {
+    printf("You are \033[30mblack\033[0m!\n");
+  }
+
   printf("\n");
   for (int row = 0; row < GAME_BOARD_WITH_EDGES_SIZE; row++) {
 

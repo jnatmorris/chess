@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <ncurses.h>
 
 int main(int argc, char *argv[]) {
   bool isWhite, isWhitesTurn = true;
@@ -18,13 +17,12 @@ int main(int argc, char *argv[]) {
   int socketFd = connectOrCreateSocket(&isWhite);
 
   initializeBoard();
-  printBoard();
+  printBoard(isWhite);
 
   struct BoardPosition boardPositionFrom, boardPositionTo;
 
   // game loop
   while (true) {
-
 
     bool fromValid = false, toValid = false;
     // input from loop
@@ -45,7 +43,7 @@ int main(int argc, char *argv[]) {
 
     int err = movePeice(boardPositionFrom, boardPositionTo, isWhite);
 
-    printBoard();
+    printBoard(isWhite);
   }
 
   return EXIT_SUCCESS;

@@ -1,6 +1,8 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
-void printBoard();
+#include <stdbool.h>
+
+void printBoard(bool isWhite);
 
 #endif
