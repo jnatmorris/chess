@@ -9,8 +9,9 @@
 #include <unistd.h>
 
 int connectToServer() {
-  int fd = socket(AF_UNIX, SOCK_STREAM, 0);
-  if (fd == -1) {
+  int fd;
+
+  if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
     return -1;
   }
 
@@ -43,7 +44,7 @@ int createSocketServer() {
 
   printf("Created socket server!\n");
 
-  return fd;
+  return accept(fd, NULL, NULL);
 }
 
 // try connecting to socket

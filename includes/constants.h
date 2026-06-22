@@ -27,6 +27,11 @@ struct BoardPosition {
   int column;
 };
 
+struct UserMoveBoardPositions {
+  struct BoardPosition from;
+  struct BoardPosition to;
+};
+
 extern const char borderLeft[];
 extern const char borderTop[9];
 
