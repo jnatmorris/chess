@@ -11,10 +11,12 @@
 
 int main(int argc, char *argv[]) {
   bool isWhite, isMyTurn;
-  int rowToMoveFrom, rowToMoveTo;
+  int rowToMoveFrom, rowToMoveTo, opponentFd;
   char columnToMoveFrom, columnToMoveTo;
 
-  int socketFd = connectOrCreateSocket(&isWhite);
+  if ((opponentFd = connectOrCreateSocket(&isWhite)) == -1) {
+    return EXIT_FAILURE;
+  }
 
   initializeBoard();
   printBoard(isWhite);
@@ -24,7 +26,7 @@ int main(int argc, char *argv[]) {
 
   // game loop
   while (true) {
-
+    struct UserMoveBoardPositions playerMove = {0};
     // if is white
     // white goes
     // await move from black
@@ -49,22 +51,27 @@ int main(int argc, char *argv[]) {
                                    rowToMoveTo, columnToMoveTo, isWhite);
       }
 
-      int err = movePeice(boardPositionFrom, boardPositionTo, isWhite);
+      movePeice(boardPositionFrom, boardPositionTo);
 
-      struct UserMoveBoardPositions myMove = {0};
-      myMove.from = boardPositionFrom;
-      myMove.to = boardPositionTo;
-      send(socketFd, &myMove, sizeof(myMove), 0);
+      playerMove.from = boardPositionFrom;
+      playerMove.to = boardPositionTo;
+
+      if (send(opponentFd, &playerMove, sizeof(playerMove), 0) == -1) {
+        printf("Failed sending move to opponent!\n");
+        return EXIT_FAILURE;
+      }
 
       printBoard(isWhite);
       isMyTurn = false;
     } else {
       printf("Awaiting move from other player...\n");
 
-      struct UserMoveBoardPositions opponentsMove = {0};
-      int res = recv(socketFd, &opponentsMove, sizeof(opponentsMove), 0);
+      if (recv(opponentFd, &playerMove, sizeof(playerMove), 0) == -1) {
+        printf("Failed in receiving opponents move!\n");
+        return EXIT_FAILURE;
+      }
 
-      movePeice(opponentsMove.from, opponentsMove.to, isWhite);
+      movePeice(playerMove.from, playerMove.to);
       printBoard(isWhite);
 
       isMyTurn = true;

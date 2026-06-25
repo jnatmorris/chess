@@ -24,7 +24,7 @@ int connectToServer() {
 }
 
 int createSocketServer() {
-  int fd;
+  int fd, opponentFd;
 
   if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
     return -1;
@@ -34,17 +34,22 @@ int createSocketServer() {
 
   if (bind(fd, (struct sockaddr *)&sockAdr, sizeof(sockAdr)) == -1) {
     printf("Failed to bind the socket!\n");
-    return EXIT_FAILURE;
+    return -1;
   }
 
   if (listen(fd, 1) == -1) {
     printf("Failed to listen on socket\n!");
-    return EXIT_FAILURE;
+    return -1;
   }
 
-  printf("Created socket server!\n");
+  printf("Awaiting opponent to connect...\n");
 
-  return accept(fd, NULL, NULL);
+  if ((opponentFd = accept(fd, NULL, NULL)) == -1) {
+    printf("Failed to accept on socket\n!");
+    return -1;
+  }
+
+  return opponentFd;
 }
 
 // try connecting to socket
