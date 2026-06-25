@@ -18,6 +18,11 @@ bool isValidPositionForPawn(struct BoardPosition *from,
 
   // check if user wants to move forward in column (not taking)
   if (from->column == to->column) {
+
+    if (gameBoard[to->row][to->column].PeiceType != Empty) {
+      return false;
+    }
+
     // if pawn is on starting line allow pawn to move 2 spaces
     if (from->row == startingPosition) {
       return from->row - (1 * operandBasedOnColor) == to->row ||
