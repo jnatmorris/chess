@@ -4,9 +4,12 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-// on starting line, move 1 or two positions
-// can take, move diagonal
-// gets to end
+/*
+ * 1. May move 1 or 2 positions (starting line)
+ * 2. may move diagonal to take
+ * 3. TODO: may En Passant
+ * 4. TODO: may choose a peice when at end
+ */
 bool isValidPositionForPawn(struct BoardPosition *from,
                             struct BoardPosition *to, bool playerIsWhite) {
 
@@ -24,18 +27,15 @@ bool isValidPositionForPawn(struct BoardPosition *from,
     }
   }
 
-  // if moving forward and right or left to take. check if space is also filled
-  // with something to take (peice + color)
   if ((from->column + 1 == to->column || from->column - 1 == to->column) &&
-      from->column + operandBasedOnColor == to->row &&     // one row over
+      from->row + (-1 * operandBasedOnColor) ==
+          to->row && // one forward/backwars (-1 as 0 is top)
       gameBoard[to->row][to->column].PeiceType != Empty && // must be a peice
       gameBoard[to->row][to->column].isWhite !=
           playerIsWhite) // not the same color
   {
     return true;
   }
-
-  // TODO: Implement En Passant
 
   return false;
 }
