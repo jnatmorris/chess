@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
       printBoard(isWhite);
       isMyTurn = false;
     } else {
-      printf("Awaiting move from other player...\n");
+      printf("Awaiting move from opponent...\n");
 
       if (recv(opponentFd, &playerMove, sizeof(playerMove), 0) == -1) {
         printf("Failed in receiving opponents move!\n");

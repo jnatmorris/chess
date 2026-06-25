@@ -42,6 +42,7 @@ int createSocketServer() {
     return -1;
   }
 
+  system("clear");
   printf("Awaiting opponent to connect...\n");
 
   if ((opponentFd = accept(fd, NULL, NULL)) == -1) {
