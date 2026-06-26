@@ -10,3 +10,9 @@ file(GLOB_RECURSE SOURCES "src/*.c")
 add_executable(main ${SOURCES})
 
 target_include_directories(main PRIVATE includes)
+
+target_compile_options(main PRIVATE
+    -Wall
+    -Wextra
+    -Wpedantic
+)

@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[]) {
+int main(void) {
   bool isWhite, isMyTurn;
   int rowToMoveFrom, rowToMoveTo, opponentFd;
   char columnToMoveFrom, columnToMoveTo;

@@ -8,7 +8,7 @@
 #include <sys/un.h>
 #include <unistd.h>
 
-int connectToServer() {
+int connectToServer(void) {
   int fd;
 
   if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
@@ -23,7 +23,7 @@ int connectToServer() {
   return -1;
 }
 
-int createSocketServer() {
+int createSocketServer(void) {
   int fd, opponentFd;
 
   if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
