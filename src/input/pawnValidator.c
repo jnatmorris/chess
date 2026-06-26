@@ -1,6 +1,6 @@
 
 #include "constants.h"
-#include "globals.h"
+#include "movementHelpers.h"
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -19,7 +19,7 @@ bool isValidPositionForPawn(struct BoardPosition *from,
   // check if user wants to move forward in column (not taking)
   if (from->column == to->column) {
 
-    if (gameBoard[to->row][to->column].PeiceType != Empty) {
+    if (!isPositionEmpty(to)) {
       return false;
     }
 
@@ -34,10 +34,9 @@ bool isValidPositionForPawn(struct BoardPosition *from,
 
   if ((from->column + 1 == to->column || from->column - 1 == to->column) &&
       from->row + (-1 * operandBasedOnColor) ==
-          to->row && // one forward/backwars (-1 as 0 is top)
-      gameBoard[to->row][to->column].PeiceType != Empty && // must be a peice
-      gameBoard[to->row][to->column].isWhite !=
-          playerIsWhite) // not the same color
+          to->row &&          // one forward/backwars (-1 as 0 is top)
+      !isPositionEmpty(to) && // must be a peice
+      !isLocationSameColor(to, playerIsWhite)) // not the same color
   {
     return true;
   }
